@@ -125,7 +125,7 @@ class AIExpertTrader:
         """Análise técnica com tratamento de erro"""
         try:
             close_series = pd.Series(df['Close'].squeeze().values.flatten()).astype(float)
-            rsi = (close_series, window=14).rsi()
+            rsi = RSIIndicator(close_series, window=14).rsi()
             macd_obj = MACD(close_series)
             macd = macd_obj.macd()
             macd_signal = macd_obj.macd_signal()
