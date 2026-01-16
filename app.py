@@ -124,8 +124,8 @@ class AIExpertTrader:
     def _analisar_tecnicos(self, df):
         """Análise técnica com tratamento de erro"""
         try:
-            close_series = pd.Series(df['Close'].values.flatten()).astype(float)
-            rsi = RSIIndicator(close_series, window=14).rsi()
+            close_series = pd.Series(df['Close'].squeeze().values.flatten()).astype(float)
+            rsi = (close_series, window=14).rsi()
             macd_obj = MACD(close_series)
             macd = macd_obj.macd()
             macd_signal = macd_obj.macd_signal()
@@ -139,7 +139,7 @@ class AIExpertTrader:
             macd_signal_val = float(macd_signal.iloc[-1])
             bb_upper = float(bb.bollinger_hband().iloc[-1])
             bb_lower = float(bb.bollinger_lband().iloc[-1])
-            price = float(df['Close'].iloc[-1])
+            price = float(df['Close'].squeeze().iloc[-1])
             
             bb_pos = (price - bb_lower) / (bb_upper - bb_lower) if bb_upper != bb_lower else 0.5
             
@@ -228,7 +228,7 @@ class AIExpertTrader:
             atr = AverageTrueRange(
                 pd.Series(df['High'].values.flatten()).astype(float),
                 pd.Series(df['Low'].values.flatten()).astype(float),
-                pd.Series(df['Close'].values.flatten()).astype(float),
+                pd.Series(df['Close'].squeeze().values.flatten()).astype(float),
                 window=14
             )
             atr_val = float(atr.average_true_range().iloc[-1])
@@ -277,7 +277,7 @@ class AIExpertTrader:
     def _analisar_tendencia(self, df):
         """Trend otimizado"""
         try:
-            close_series = pd.Series(df['Close'].values.flatten()).astype(float)
+            close_series = pd.Series(df['Close'].squeeze().values.flatten()).astype(float)
             ema9 = EMAIndicator(close_series, window=9).ema_indicator()
             ema21 = EMAIndicator(close_series, window=21).ema_indicator()
             ema50 = EMAIndicator(close_series, window=50).ema_indicator()
@@ -311,7 +311,7 @@ class AIExpertTrader:
     def _analisar_momentum(self, df):
         """Momentum otimizado"""
         try:
-            close_series = pd.Series(df['Close'].values.flatten()).astype(float)
+            close_series = pd.Series(df['Close'].squeeze().values.flatten()).astype(float)
             rsi = RSIIndicator(close_series, window=14).rsi()
             stoch = StochasticOscillator(
                 pd.Series(df['High'].values.flatten()).astype(float),
@@ -603,11 +603,11 @@ with tab1:
     st.subheader(f"{symbol} | {interval}")
     
     # Indicadores
-    rsi = ta.momentum.RSIIndicator(df['Close'], window=14).rsi()
-    bb = ta.volatility.BollingerBands(df['Close'], window=20, window_dev=2)
-    ema9 = ta.trend.EMAIndicator(df['Close'], window=9).ema_indicator()
-    ema21 = ta.trend.EMAIndicator(df['Close'], window=21).ema_indicator()
-    ema50 = ta.trend.EMAIndicator(df['Close'], window=50).ema_indicator()
+    rsi = ta.momentum.RSIIndicator(df['Close'].squeeze(), window=14).rsi()
+    bb = ta.volatility.BollingerBands(df['Close'].squeeze(), window=20, window_dev=2)
+    ema9 = ta.trend.EMAIndicator(df['Close'].squeeze(), window=9).ema_indicator()
+    ema21 = ta.trend.EMAIndicator(df['Close'].squeeze(), window=21).ema_indicator()
+    ema50 = ta.trend.EMAIndicator(df['Close'].squeeze(), window=50).ema_indicator()
     
     # Gráfico
     fig = make_subplots(
