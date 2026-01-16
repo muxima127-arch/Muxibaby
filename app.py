@@ -745,5 +745,7 @@ st.markdown("<p style='text-align: center; font-size: 11px; color: gray;'>🚀 A
 
 
 if __name__ == "__main__":
+
+        # Auto refresh trigger
     # Auto-refresh a cada 5 segundos
 main()
