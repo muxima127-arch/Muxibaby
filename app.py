@@ -162,10 +162,9 @@ class AIExpertTrader:
     def _analisar_price_action(self, df):
         """🔧 CORRIGIDO: Price Action - Converter SEMPRE para float"""
         try:
-            close = df['Close']
-            high = df['High']
-            low = df['Low']
-            
+        close = df['Close'].squeeze()
+                high = df['High'].squeeze()high = df['High']
+        low = df['Low'].squeeze()            
             recent_closes = close.iloc[-5:].values
             recent_highs = high.iloc[-5:].values
             recent_lows = low.iloc[-5:].values
@@ -745,3 +744,12 @@ with tab4:
 # Footer
 st.markdown("---")
 st.markdown("<p style='text-align: center; font-size: 11px; color: gray;'>🚀 AI TRADING PRO | Version 4.1 | ✅ Bugs Fixed | ⚠️ Trading é risco. Sempre use Stop Loss.</p>", unsafe_allow_html=True)
+
+
+if __name__ == "__main__":
+    # Auto-refresh a cada 5 segundos
+    import time
+    while True:
+        main()
+        time.sleep(5)
+        st.rerun()
