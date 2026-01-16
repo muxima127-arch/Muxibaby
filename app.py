@@ -163,9 +163,9 @@ class AIExpertTrader:
         """🔧 CORRIGIDO: Price Action - Converter SEMPRE para float"""
         try:
         close = df['Close'].squeeze()
-                high = df['High'].squeeze()high = df['High']
-        low = df['Low'].squeeze()            
-            recent_closes = close.iloc[-5:].values
+                high = df['High'].squeeze()high = df['High'].squeeze()high = df['High']
+        low = df['Low'].squeeze()
+        recent_closes = close.iloc[-5:].values
             recent_highs = high.iloc[-5:].values
             recent_lows = low.iloc[-5:].values
             
