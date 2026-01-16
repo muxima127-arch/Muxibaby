@@ -748,8 +748,4 @@ st.markdown("<p style='text-align: center; font-size: 11px; color: gray;'>🚀 A
 
 if __name__ == "__main__":
     # Auto-refresh a cada 5 segundos
-    import time
-    while True:
-        main()
-        time.sleep(5)
-        st.rerun()
+main()
